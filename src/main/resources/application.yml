@@ -1,0 +1,29 @@
+#this client server port
+server:
+  port: 9095
+  
+security:    
+  basic:    
+    enabled: false    
+  user:    
+    name: admin
+    password: password
+#remote server address
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:password@localhost:9090/eureka/
+      
+spring:
+  application:
+    name: service-zuul
+#以/api-a/ 开头的请求都转发给service-ribbon服务；
+#以/api-b/开头的请求都转发给service-feign服务；
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: service-ribbon
+    api-b:
+      path: /api-b/**
+      serviceId: service-feign
